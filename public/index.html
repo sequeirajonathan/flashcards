@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Flashcards</title>
+  <!-- PWA / iOS home-screen support -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Flashcards" />
+  <meta name="theme-color" content="#1a1a2e" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main id="app">
+    <!-- ============ DECKS VIEW ============ -->
+    <section id="view-decks" class="view">
+      <header class="page-header">
+        <h1>Decks</h1>
+        <button id="btn-new-deck" class="btn btn-small" aria-label="New deck">+ New</button>
+      </header>
+      <div id="deck-list" class="deck-list"></div>
+    </section>
+
+    <!-- ============ BROWSE VIEW ============ -->
+    <section id="view-browse" class="view hidden">
+      <header class="page-header"><h1>Browse</h1></header>
+      <div class="browse-controls">
+        <select id="browse-deck" class="input"></select>
+        <input id="browse-search" class="input" type="search" placeholder="Search front / back…" autocomplete="off" />
+        <input id="browse-tag" class="input" type="text" placeholder="Filter by tag…" autocomplete="off" />
+      </div>
+      <div id="browse-list" class="browse-list"></div>
+    </section>
+
+    <!-- ============ ADD VIEW ============ -->
+    <section id="view-add" class="view hidden">
+      <header class="page-header"><h1>Add Card</h1></header>
+      <form id="add-form" class="form">
+        <label>Deck
+          <select id="add-deck" class="input" required></select>
+        </label>
+        <label>Front
+          <textarea id="add-front" class="input" rows="3" required placeholder="Question / prompt"></textarea>
+        </label>
+        <label>Back
+          <textarea id="add-back" class="input" rows="4" required placeholder="Answer"></textarea>
+        </label>
+        <label>Tags <span class="hint">(comma-separated)</span>
+          <input id="add-tags" class="input" type="text" placeholder="arrays, pattern" autocomplete="off" />
+        </label>
+        <button type="submit" class="btn btn-primary">Add Card</button>
+        <p id="add-status" class="status" role="status"></p>
+      </form>
+    </section>
+
+    <!-- ============ STATS VIEW ============ -->
+    <section id="view-stats" class="view hidden">
+      <header class="page-header">
+        <h1>Stats</h1>
+        <button id="btn-import-files" class="btn btn-small" aria-label="Import card files">⭳ Import</button>
+      </header>
+      <div id="stats-global" class="stats-grid"></div>
+      <h2 class="section-title">Per deck</h2>
+      <div id="stats-decks"></div>
+    </section>
+
+    <!-- ============ STUDY VIEW ============ -->
+    <section id="view-study" class="view hidden">
+      <header class="study-header">
+        <button id="study-exit" class="btn btn-small" aria-label="Exit study">✕</button>
+        <span id="study-progress" class="study-progress"></span>
+        <span id="study-deck-name" class="study-deck"></span>
+      </header>
+      <div id="study-card" class="study-card">
+        <div id="study-front" class="study-face"></div>
+        <div id="study-back" class="study-face hidden"></div>
+        <button id="btn-show-answer" class="btn btn-primary btn-large">Show Answer</button>
+        <div id="study-ratings" class="rating-row hidden">
+          <button class="btn-rate rate-again" data-rating="1">Again<span class="interval"></span></button>
+          <button class="btn-rate rate-hard" data-rating="2">Hard<span class="interval"></span></button>
+          <button class="btn-rate rate-good" data-rating="3">Good<span class="interval"></span></button>
+          <button class="btn-rate rate-easy" data-rating="4">Easy<span class="interval"></span></button>
+        </div>
+      </div>
+      <div id="study-done" class="study-done hidden">
+        <h2>Session complete 🎉</h2>
+        <p id="study-summary"></p>
+        <button id="btn-study-again" class="btn btn-primary">Back to Decks</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Edit card modal -->
+  <div id="edit-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Edit card">
+    <div class="modal-card">
+      <h2>Edit Card</h2>
+      <label>Front <textarea id="edit-front" class="input" rows="3"></textarea></label>
+      <label>Back <textarea id="edit-back" class="input" rows="4"></textarea></label>
+      <label>Tags <input id="edit-tags" class="input" type="text" /></label>
+      <div class="modal-actions">
+        <button id="edit-cancel" class="btn">Cancel</button>
+        <button id="edit-save" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <button class="nav-btn active" data-view="decks">🗂<span>Decks</span></button>
+    <button class="nav-btn" data-view="browse">🔍<span>Browse</span></button>
+    <button class="nav-btn" data-view="add">➕<span>Add</span></button>
+    <button class="nav-btn" data-view="stats">📊<span>Stats</span></button>
+  </nav>
+
+  <script src="/app.js"></script>
+</body>
+</html>
